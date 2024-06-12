@@ -1,0 +1,31 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Update
+    - run: sudo apt-get update
+    - run: sudo apt install gawk patch bzip2 tar make libgmp-dev libmpfr-dev libmpc-dev gettext wget libelf-dev texinfo bison flex sed git build-essential diffutils curl libjpeg-dev libpng-dev python3 pkg-config cmake
+    - run: sudo apt install libisofs-dev meson ninja-build rake
+    - run: sudo mkdir -p /opt/toolchains/dc
+    - run: sudo chmod -R 755 /opt/toolchains/dc
+    - run: sudo chown -R $(id -u):$(id -g) /opt/toolchains/dc
+    - name: Download
+    - run: git clone https://github.com/KallistiOS/KallistiOS.git /opt/toolchains/dc/kos
+    - run: cd /opt/toolchains/dc/kos/utils/dc-chain
+    - name: compiling the kos
+    - run: make
+    - run: make clean
+    - name: Compiling the game
+    - run: cd
+    - run: make
