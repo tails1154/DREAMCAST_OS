@@ -11,16 +11,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Update
     - run: sudo apt-get update
+    - name: Install deps (1/2)
     - run: sudo apt install gawk patch bzip2 tar make libgmp-dev libmpfr-dev libmpc-dev gettext wget libelf-dev texinfo bison flex sed git build-essential diffutils curl libjpeg-dev libpng-dev python3 pkg-config cmake
+    - name: Install deps (2/2)
     - run: sudo apt install libisofs-dev meson ninja-build rake
+    - name: Set Up Workspace (1/3)
     - run: sudo mkdir -p /opt/toolchains/dc
+    - name: Set Up Workspace (2/3)
     - run: sudo chmod -R 755 /opt/toolchains/dc
+    - name: Set Up Workspace (3/3)
     - run: sudo chown -R $(id -u):$(id -g) /opt/toolchains/dc
+    - name: Cloning the repo
     - run: git clone https://github.com/KallistiOS/KallistiOS.git /opt/toolchains/dc/kos
+    - name: cd
     - run: cd /opt/toolchains/dc/kos/utils/dc-chain
+    - name: Compiling KOS
     - run: make
+    - name: Cleaning up...
     - run: make clean
-    - name: Compiling the game
-    - run: cd
+    - name: Compiling the game (1/2)
+    - run: cd ~
+    - name: Compiling the game (2/2)
     - run: make
